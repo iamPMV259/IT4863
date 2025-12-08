@@ -1,0 +1,78 @@
+import json
+
+import scrapy
+from scrapy.crawler import CrawlerProcess
+
+
+class ThivienAuthorSpider(scrapy.Spider):
+    name = "thivien_author"
+    
+    authors_list = json.load(open('authors_list.json', 'r', encoding='utf8'))
+    # URL tác giả bạn cung cấp
+    start_urls = [author['url'] for author in authors_list]
+    start_urls = list(set(start_urls))  # Loại bỏ trùng lặp nếu có
+
+    custom_settings = {
+        # Giả lập Browser để tránh bị chặn
+        'USER_AGENT': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'ROBOTSTXT_OBEY': True,
+        'DOWNLOAD_DELAY': 1, # Chậm lại 1s để lịch sự với server
+    }
+
+    def parse(self, response):
+        # --- 1. Xử lý phần Header (Thông tin tác giả) ---
+        header = response.css('header.page-header h1')
+        
+        # Lấy bút danh (Text node trực tiếp của h1)
+        main_name = header.xpath('./text()').get()
+        if main_name:
+            main_name = main_name.strip()
+            
+        # Lấy tên thật (nằm trong thẻ <small>)
+        real_name = header.css('small::text').get()
+        if real_name:
+            real_name = real_name.strip()
+
+        # --- 2. Xử lý Danh sách bài thơ ---
+        poems_list = []
+        
+        # Chọn tất cả thẻ a nằm trong các khối .poem-group-list
+        # Logic này lấy hết bài thơ bất kể nó nằm trong tập thơ nào
+        for link in response.css('.poem-group-list a'):
+            poem_title = link.css('::text').get()
+            poem_href = link.css('::attr(href)').get()
+            
+            if poem_title and poem_href:
+                full_url = response.urljoin(poem_href)
+                poems_list.append({
+                    'bai_tho': poem_title.strip(),
+                    'url': full_url
+                })
+
+        # --- Output kết quả ---
+        yield {
+            'author_info': {
+                'ten': main_name,
+                'ten_that': real_name
+            },
+            'total_poems': len(poems_list),
+            'poems': poems_list
+        }
+
+# --- Cấu hình để chạy trực tiếp bằng python ---
+if __name__ == "__main__":
+    # Cài đặt output ra file JSON
+    process = CrawlerProcess(settings={
+        'FEEDS': {
+            'author_data.json': {
+                'format': 'json',
+                'encoding': 'utf8',
+                'indent': 4,
+                'overwrite': True, # Ghi đè file cũ nếu chạy lại
+            }
+        },
+        'LOG_LEVEL': 'INFO' # Chỉ hiện thông tin quan trọng, ẩn debug
+    })
+
+    process.crawl(ThivienAuthorSpider)
+    process.start() # Bắt đầu crawl (blocking)  
