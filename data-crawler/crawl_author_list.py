@@ -272,7 +272,7 @@ class ThivienAuthorListSpider(scrapy.Spider):
     custom_settings = {
         'USER_AGENT': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
         'ROBOTSTXT_OBEY': True,
-        'DOWNLOAD_DELAY': 1,
+        'DOWNLOAD_DELAY': 60,
     }
 
     def parse(self, response):
