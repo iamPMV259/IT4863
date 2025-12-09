@@ -11,13 +11,22 @@ class ThivienAuthorSpider(scrapy.Spider):
     # URL tác giả bạn cung cấp
     start_urls = [author['url'] for author in authors_list]
     start_urls = list(set(start_urls))  # Loại bỏ trùng lặp nếu có
+    print (f"Total authors to crawl: {len(start_urls)}")
+
+    # start_urls = start_urls[0:2]
+
+    # start_urls = [
+    #     "https://www.thivien.net/Nguy%E1%BB%85n-Du/author-ZRyB2U-4oqfhcjZ7xrf1_A",
+    # ]
 
     custom_settings = {
         # Giả lập Browser để tránh bị chặn
         'USER_AGENT': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
         'ROBOTSTXT_OBEY': True,
-        'DOWNLOAD_DELAY': 1, # Chậm lại 1s để lịch sự với server
+        'DOWNLOAD_DELAY': 5, # Chậm lại 5s để lịch sự với server
     }
+
+    count = 0
 
     def parse(self, response):
         # --- 1. Xử lý phần Header (Thông tin tác giả) ---
@@ -50,14 +59,21 @@ class ThivienAuthorSpider(scrapy.Spider):
                 })
 
         # --- Output kết quả ---
+        print(f"Crawled author: {main_name} ({real_name}), Total poems: {len(poems_list)}")
+        self.count += 1
         yield {
             'author_info': {
                 'ten': main_name,
-                'ten_that': real_name
+                'ten_that': real_name,
+                'url': response.url,
             },
             'total_poems': len(poems_list),
             'poems': poems_list
         }
+        if self.count % 200 == 0:
+            print(f"--- Processed {self.count} authors so far ---")
+            import time
+            time.sleep(600)  # Nghỉ 10 giây sau mỗi 200 tác giả để tránh quá tải server
 
 # --- Cấu hình để chạy trực tiếp bằng python ---
 if __name__ == "__main__":

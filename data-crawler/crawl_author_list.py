@@ -298,7 +298,7 @@ class ThivienAuthorListSpider(scrapy.Spider):
                 if self.count % 100 == 0:
                     print(f"Đã thu thập được {self.count} tác giả.")
                     import time
-                    time.sleep(1200)  # Tạm dừng 2 giây sau mỗi 50 tác giả thu thập được
+                    time.sleep(300)  # Tạm dừng 2 giây sau mỗi 50 tác giả thu thập được
 
 # --- Cấu hình chạy trực tiếp ---
 if __name__ == "__main__":
