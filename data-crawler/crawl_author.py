@@ -70,7 +70,7 @@ class ThivienAuthorSpider(scrapy.Spider):
             'total_poems': len(poems_list),
             'poems': poems_list
         }
-        if self.count % 200 == 0:
+        if self.count % 100 == 0:
             print(f"--- Processed {self.count} authors so far ---")
             import time
             time.sleep(600)  # Nghỉ 10 giây sau mỗi 200 tác giả để tránh quá tải server
