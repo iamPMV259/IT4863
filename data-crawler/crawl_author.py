@@ -26,7 +26,8 @@ class ThivienAuthorSpider(scrapy.Spider):
         'DOWNLOAD_DELAY': 5, # Chậm lại 5s để lịch sự với server
     }
 
-    count = 0
+    
+    count_authors = 0
 
     def parse(self, response):
         # --- 1. Xử lý phần Header (Thông tin tác giả) ---
@@ -60,7 +61,8 @@ class ThivienAuthorSpider(scrapy.Spider):
 
         # --- Output kết quả ---
         print(f"Crawled author: {main_name} ({real_name}), Total poems: {len(poems_list)}")
-        self.count += 1
+        
+        self.count_authors += 1
         yield {
             'author_info': {
                 'ten': main_name,
@@ -70,8 +72,8 @@ class ThivienAuthorSpider(scrapy.Spider):
             'total_poems': len(poems_list),
             'poems': poems_list
         }
-        if self.count % 100 == 0:
-            print(f"--- Processed {self.count} authors so far ---")
+        if self.count_authors % 50 == 0:
+            print(f"--- Processed {self.count_authors} authors so far ---")
             import time
             time.sleep(600)  # Nghỉ 10 giây sau mỗi 200 tác giả để tránh quá tải server
 
