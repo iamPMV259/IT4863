@@ -272,8 +272,9 @@ class ThivienAuthorListSpider(scrapy.Spider):
     custom_settings = {
         'USER_AGENT': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
         'ROBOTSTXT_OBEY': True,
-        'DOWNLOAD_DELAY': 60,
+        'DOWNLOAD_DELAY': 5,
     }
+    count = 0
 
     def parse(self, response):
         # Lặp qua từng khối item chứa thông tin tác giả
@@ -288,10 +289,16 @@ class ThivienAuthorListSpider(scrapy.Spider):
 
             # Chỉ lấy dữ liệu nếu tìm thấy cả tên và link
             if name and href:
+                print(f"TAC GIA: {name} - Link: {href}")
+                self.count += 1
                 yield {
                     'tác giả': name.strip(),
                     'url': response.urljoin(href) # Chuyển link tương đối thành tuyệt đối
                 }
+                if self.count % 100 == 0:
+                    print(f"Đã thu thập được {self.count} tác giả.")
+                    import time
+                    time.sleep(1200)  # Tạm dừng 2 giây sau mỗi 50 tác giả thu thập được
 
 # --- Cấu hình chạy trực tiếp ---
 if __name__ == "__main__":
