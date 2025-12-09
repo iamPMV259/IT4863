@@ -7,10 +7,10 @@ from scrapy.crawler import CrawlerProcess
 class ThivienAuthorSpider(scrapy.Spider):
     name = "thivien_author"
     
-    authors_list = json.load(open('authors_list.json', 'r', encoding='utf8'))
+    authors_list = json.load(open('unique_authors.json', 'r', encoding='utf8'))
     # URL tác giả bạn cung cấp
     start_urls = [author['url'] for author in authors_list]
-    start_urls = list(set(start_urls))  # Loại bỏ trùng lặp nếu có
+    # start_urls = list(set(start_urls))  # Loại bỏ trùng lặp nếu có
     print (f"Total authors to crawl: {len(start_urls)}")
 
     # start_urls = start_urls[0:2]
@@ -72,10 +72,10 @@ class ThivienAuthorSpider(scrapy.Spider):
             'total_poems': len(poems_list),
             'poems': poems_list
         }
-        if self.count_authors % 50 == 0:
+        if self.count_authors % 20 == 0:
             print(f"--- Processed {self.count_authors} authors so far ---")
             import time
-            time.sleep(600)  # Nghỉ 10 giây sau mỗi 200 tác giả để tránh quá tải server
+            time.sleep(900)  # Nghỉ 10 giây sau mỗi 200 tác giả để tránh quá tải server
 
 # --- Cấu hình để chạy trực tiếp bằng python ---
 if __name__ == "__main__":
