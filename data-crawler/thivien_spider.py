@@ -1,3 +1,5 @@
+import json
+
 import scrapy
 from scrapy.crawler import CrawlerProcess
 
@@ -8,9 +10,9 @@ class ThivienSpider(scrapy.Spider):
     
     def __init__(self, *args, **kwargs):
         super(ThivienSpider, self).__init__(*args, **kwargs)
-        self.start_urls = [
-            "https://www.thivien.net/B%C3%ACnh-Ph%C3%BA-t%E1%BB%95ng-%C4%91%E1%BB%91c/L%C6%B0u-gi%E1%BA%A3n-thi/poem-I-2ytrp1yZIeWPMqH9wouA"
-        ]
+        urls_list = json.load(open('poem_urls_list.json', 'r', encoding='utf-8'))
+        self.start_urls = [item['url'] for item in urls_list]
+        self.count = 0
     
     def parse(self, response):
         """
@@ -94,6 +96,13 @@ class ThivienSpider(scrapy.Spider):
             'the_tho': the_tho,
             'thoi_ky': thoi_ky,
         }
+        print(f"Scraped poem: {poem_title} by {author}")
+        print("-" * 40)
+        self.count += 1
+        if self.count % 500 == 0:
+            print(f"Scraped {self.count} poems so far.")
+            import time
+            time.sleep(100)  # Tạm dừng 10 giây sau mỗi 500 bài thơ để tránh bị block
         
         yield poem_data
 
@@ -116,7 +125,7 @@ if __name__ == '__main__':
         },
         'ROBOTSTXT_OBEY': False,
         'CONCURRENT_REQUESTS': 1,
-        'DOWNLOAD_DELAY': 2,  # Delay 2 giây giữa các request để tránh bị block
+        'DOWNLOAD_DELAY': 30,  # Delay 30 giây giữa các request để tránh bị block
     })
     
     process.crawl(ThivienSpider)
