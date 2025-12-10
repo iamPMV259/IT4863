@@ -23,7 +23,7 @@ class ThivienAuthorSpider(scrapy.Spider):
         # Giả lập Browser để tránh bị chặn
         'USER_AGENT': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
         'ROBOTSTXT_OBEY': True,
-        'DOWNLOAD_DELAY': 5, # Chậm lại 5s để lịch sự với server
+        'DOWNLOAD_DELAY': 10, # Chậm lại 10s để lịch sự với server
     }
 
     
@@ -72,10 +72,10 @@ class ThivienAuthorSpider(scrapy.Spider):
             'total_poems': len(poems_list),
             'poems': poems_list
         }
-        if self.count_authors % 20 == 0:
+        if self.count_authors % 50 == 0:
             print(f"--- Processed {self.count_authors} authors so far ---")
             import time
-            time.sleep(900)  # Nghỉ 10 giây sau mỗi 200 tác giả để tránh quá tải server
+            time.sleep(1800)  # Nghỉ 15 phút sau mỗi 50 tác giả để tránh quá tải server
 
 # --- Cấu hình để chạy trực tiếp bằng python ---
 if __name__ == "__main__":
