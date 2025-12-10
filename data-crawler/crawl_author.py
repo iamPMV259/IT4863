@@ -75,7 +75,7 @@ class ThivienAuthorSpider(scrapy.Spider):
         if self.count_authors % 50 == 0:
             print(f"--- Processed {self.count_authors} authors so far ---")
             import time
-            time.sleep(1800)  # Nghỉ 15 phút sau mỗi 50 tác giả để tránh quá tải server
+            time.sleep(10)  # Nghỉ 15 phút sau mỗi 50 tác giả để tránh quá tải server
 
 # --- Cấu hình để chạy trực tiếp bằng python ---
 if __name__ == "__main__":
