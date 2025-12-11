@@ -125,7 +125,7 @@ if __name__ == '__main__':
         },
         'ROBOTSTXT_OBEY': False,
         'CONCURRENT_REQUESTS': 1,
-        'DOWNLOAD_DELAY': 30,  # Delay 30 giây giữa các request để tránh bị block
+        'DOWNLOAD_DELAY': 30,  # Delay 5 giây giữa các request để tránh bị block
     })
     
     process.crawl(ThivienSpider)
