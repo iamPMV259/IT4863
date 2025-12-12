@@ -1,4 +1,5 @@
 import json
+import random
 
 import scrapy
 from scrapy.crawler import CrawlerProcess
@@ -99,10 +100,10 @@ class ThivienSpider(scrapy.Spider):
         print(f"Scraped poem: {poem_title} by {author}")
         print("-" * 40)
         self.count += 1
-        if self.count % 500 == 0:
+        if self.count % 100 == 0:
             print(f"Scraped {self.count} poems so far.")
             import time
-            time.sleep(100)  # Tạm dừng 10 giây sau mỗi 500 bài thơ để tránh bị block
+            time.sleep(600)  # Tạm dừng 10 phút sau mỗi 100 bài thơ để tránh bị block
         
         yield poem_data
 
@@ -125,7 +126,7 @@ if __name__ == '__main__':
         },
         'ROBOTSTXT_OBEY': False,
         'CONCURRENT_REQUESTS': 1,
-        'DOWNLOAD_DELAY': 30,  # Delay 5 giây giữa các request để tránh bị block
+        'DOWNLOAD_DELAY': random.uniform(30, 60),  # Delay 5 giây giữa các request để tránh bị block
     })
     
     process.crawl(ThivienSpider)
