@@ -4,6 +4,7 @@ import random
 import scrapy
 from scrapy.crawler import CrawlerProcess
 
+name_file = "part_1"
 
 class ThivienSpider(scrapy.Spider):
     name = 'thivien'
@@ -11,7 +12,7 @@ class ThivienSpider(scrapy.Spider):
     
     def __init__(self, *args, **kwargs):
         super(ThivienSpider, self).__init__(*args, **kwargs)
-        urls_list = json.load(open('poem_urls_list.json', 'r', encoding='utf-8'))
+        urls_list = json.load(open(f'poem_urls_list_{name_file}.json', 'r', encoding='utf-8'))
         self.start_urls = [item['url'] for item in urls_list]
         self.count = 0
     
@@ -113,13 +114,13 @@ if __name__ == '__main__':
     process = CrawlerProcess(settings={
         'USER_AGENT': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
         'FEEDS': {
-            'thivien_poems.json': {
+            f'thivien_poems_{name_file}.json': {
                 'format': 'json',
                 'encoding': 'utf-8',
                 'ensure_ascii': False,
                 'indent': 4,
             },
-            'thivien_poems.csv': {
+            f'thivien_poems_{name_file}.csv': {
                 'format': 'csv',
                 'encoding': 'utf-8',
             },
