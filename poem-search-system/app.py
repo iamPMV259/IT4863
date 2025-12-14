@@ -2,100 +2,99 @@ import streamlit as st
 from elasticsearch import Elasticsearch
 from sentence_transformers import SentenceTransformer
 
-# --- Cấu hình ---
+# --- CẤU HÌNH ---
 st.set_page_config(page_title="HUST Poem Search", layout="wide")
-es = Elasticsearch("http://localhost:9200")
+
+# Kết nối ES (Dùng 127.0.0.1 như bên indexer)
+es = Elasticsearch("http://127.0.0.1:9200", request_timeout=30)
 INDEX_NAME = "poems_hust_project"
 
-# Cache model để app chạy nhanh, không load lại model mỗi lần bấm nút
 @st.cache_resource
 def load_model():
     return SentenceTransformer('keepitreal/vietnamese-sbert')
 
 model = load_model()
 
-# --- Giao diện ---
+# --- HEADER & SIDEBAR ---
 st.title("🔎 Hệ thống Tìm kiếm Thơ (Hybrid Search)")
-st.caption("Demo môn học: So sánh BM25 (Xác suất) và Vector Space (Ngữ nghĩa)")
+st.caption(f"Trạng thái kết nối ES: {'🟢 Online' if es.ping() else '🔴 Offline'}")
 
 with st.sidebar:
-    st.header("⚙️ Cấu hình")
+    st.header("⚙️ Cấu hình Tìm kiếm")
     search_mode = st.radio(
         "Chọn thuật toán:",
         ("Mô hình Xác suất (BM25)", "Mô hình Vector (Semantic)")
     )
+    
+    st.divider()
     st.info("""
     **Giải thích:**
-    - **BM25:** Tìm từ khóa chính xác (dựa trên tần suất).
-    - **Vector:** Tìm theo ý nghĩa/ngữ cảnh (dựa trên AI).
+    1. **BM25 (Best Matching):** Tìm dựa trên từ khóa chính xác và tần suất xuất hiện.
+    2. **Semantic Search:** Tìm dựa trên ý nghĩa, ngữ cảnh vector (AI).
     """)
 
-query = st.text_input("Nhập từ khóa hoặc tâm trạng (VD: 'Nỗi nhớ mùa thu')", "")
+# --- MAIN UI ---
+query = st.text_input("Nhập từ khóa, câu thơ hoặc tâm trạng:", placeholder="Ví dụ: Nỗi nhớ mùa thu...")
 
-# --- Xử lý Tìm kiếm ---
-if st.button("Tìm kiếm") or query:
-    results = []
-    
-    if search_mode == "Mô hình Xác suất (BM25)":
-        # === PHƯƠNG PHÁP 1: BM25 ===
-        # Tìm chính xác từ khóa trong Title và Content
-        body = {
-            "query": {
-                "multi_match": {
-                    "query": query,
-                    "fields": ["poem_title^3", "poem_content_text"], # Title quan trọng gấp 3
-                    "type": "best_fields"
-                }
-            },
-            "size": 5
-        }
-        resp = es.search(index=INDEX_NAME, body=body)
-        results = resp['hits']['hits']
-        
+if st.button("Tìm kiếm", type="primary") or query:
+    if not query.strip():
+        st.warning("Vui lòng nhập nội dung tìm kiếm!")
     else:
-        # === PHƯƠNG PHÁP 2: VECTOR SEARCH ===
-        # 1. Biến query của user thành vector
-        query_vector = model.encode(query).tolist()
-        
-        # 2. Tìm vector gần nhất (KNN)
-        body = {
-            "knn": {
-                "field": "poem_vector",
-                "query_vector": query_vector,
-                "k": 5,
-                "num_candidates": 100
-            },
-            "_source": ["poem_title", "author", "poem_content_text", "the_tho", "thoi_ky"] 
-        }
-        resp = es.search(index=INDEX_NAME, body=body)
-        results = resp['hits']['hits']
+        results = []
+        try:
+            if search_mode == "Mô hình Xác suất (BM25)":
+                # --- LOGIC BM25 ---
+                body = {
+                    "query": {
+                        "multi_match": {
+                            "query": query,
+                            "fields": ["poem_title^3", "poem_content_text"], # Title quan trọng x3
+                            "fuzziness": "AUTO" # Chấp nhận sai chính tả nhẹ
+                        }
+                    },
+                    "size": 5
+                }
+                resp = es.search(index=INDEX_NAME, body=body)
+                results = resp['hits']['hits']
+                
+            else:
+                # --- LOGIC VECTOR ---
+                query_vector = model.encode(query).tolist()
+                body = {
+                    "knn": {
+                        "field": "poem_vector",
+                        "query_vector": query_vector,
+                        "k": 5,
+                        "num_candidates": 100
+                    },
+                    "_source": ["poem_title", "author", "poem_content_text", "the_tho", "thoi_ky"]
+                }
+                resp = es.search(index=INDEX_NAME, body=body)
+                results = resp['hits']['hits']
 
-    # --- Hiển thị Kết quả ---
-    st.subheader(f"Kết quả cho: '{query}'")
-    
-    if not results:
-        st.warning("Không tìm thấy bài thơ nào phù hợp.")
-    
-    for hit in results:
-        score = hit['_score']
-        source = hit['_source']
-        
-        # Card hiển thị từng bài thơ
-        with st.container():
-            col1, col2 = st.columns([1, 4])
-            with col1:
-                st.metric(label="Độ phù hợp (Score)", value=f"{score:.2f}")
-                st.badge(source.get('the_tho', 'Unknown'))
+            # --- HIỂN THỊ KẾT QUẢ ---
+            st.subheader(f"Kết quả ({len(results)} bài phù hợp):")
             
-            with col2:
-                st.markdown(f"### 📖 {source['poem_title']}")
-                st.text(f"Tác giả: {source['author']} | Thời kỳ: {source.get('thoi_ky', 'N/A')}")
+            if not results:
+                st.info("Không tìm thấy bài thơ nào. Thử từ khóa khác xem sao!")
+            
+            for hit in results:
+                score = hit['_score']
+                src = hit['_source']
                 
-                # Hiển thị trích đoạn (4 dòng đầu)
-                content = source['poem_content_text']
-                preview = "\n".join(content.split('\n')[:4])
-                st.code(preview + "\n...", language="text")
-                
-                with st.expander("Xem toàn bộ bài thơ"):
-                    st.write(content)
-            st.divider()
+                with st.expander(f"📖 {src['poem_title']} - {src['author']} (Score: {score:.2f})", expanded=True):
+                    col1, col2 = st.columns([3, 1])
+                    
+                    with col1:
+                        # Hiển thị nội dung (cắt 6 dòng đầu)
+                        content_lines = src['poem_content_text'].split('\n')
+                        preview = "\n".join(content_lines[:6])
+                        st.text(preview + ("\n..." if len(content_lines) > 6 else ""))
+                    
+                    with col2:
+                        st.badge(src.get('the_tho', 'N/A'))
+                        st.caption(f"Thời kỳ: {src.get('thoi_ky', 'N/A')}")
+                        st.caption(f"ID: {hit['_id']}")
+                        
+        except Exception as e:
+            st.error(f"Lỗi khi tìm kiếm: {e}")

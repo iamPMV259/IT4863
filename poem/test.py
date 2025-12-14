@@ -9,8 +9,8 @@ def load_poem_data():
     print(f"Loaded {len(poem_data)} poems from poems.json")
     poems.extend(poem_data)
 
-    for i in range(2, 8):
-        file_path = f"thivien_poems_v{i}.json"
+    for i in range(1, 10):
+        file_path = f"thivien_poems_part_{i}.json"
         print(f"Loading poems from {file_path}...")
         if os.path.exists(file_path):
             poem_data_part = json.load(open(file_path, 'r', encoding='utf-8'))
