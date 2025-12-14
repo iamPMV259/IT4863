@@ -4,7 +4,7 @@ import random
 import scrapy
 from scrapy.crawler import CrawlerProcess
 
-name_file = "part_1"
+name_file = "part_2"
 
 class ThivienSpider(scrapy.Spider):
     name = 'thivien'
