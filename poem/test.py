@@ -28,7 +28,35 @@ def load_poem_data():
 
     print(f"Total poems after filtering: {len(filtered_poems)}")
 
+    # new_filtered_poems = {}
+    # for poem in filtered_poems:
+    #     url = poem["url"]
+    #     if url not in new_filtered_poems:
+    #         new_filtered_poems[url] = poem
+
+    # filtered_poems = []
+
+    # filtered_poems = list(new_filtered_poems.values())
+
     json.dump(filtered_poems, open('poems.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=4)
 
+def remove_duplicate_data():
+    poems_data = json.load(open('poems.json', 'r', encoding='utf-8'))
+    print(f"Loaded {len(poems_data)} poems from poems.json")
+
+    unique_poems = {}
+    for poem in poems_data:
+        url = poem["url"]
+        if url not in unique_poems:
+            unique_poems[url] = poem
+
+    filtered_poems = list(unique_poems.values())
+    print(f"Total poems after removing duplicates: {len(filtered_poems)}")
+
+    json.dump(filtered_poems, open('poems.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=4)
+
+
+
 if __name__ == "__main__":
-    load_poem_data()
+    # load_poem_data()
+    remove_duplicate_data()
