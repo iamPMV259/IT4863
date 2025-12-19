@@ -58,5 +58,5 @@ def remove_duplicate_data():
 
 
 if __name__ == "__main__":
-    # load_poem_data()
-    remove_duplicate_data()
+    load_poem_data()
+    # remove_duplicate_data()
