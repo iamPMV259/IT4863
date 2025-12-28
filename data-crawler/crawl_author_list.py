@@ -5,7 +5,7 @@ from scrapy.crawler import CrawlerProcess
 class ThivienAuthorListSpider(scrapy.Spider):
     name = "thivien_author_list"
     
-    # URL trang danh sách tác giả (Page 4)
+    
     start_urls = [
         "https://www.thivien.net/search-author.php?Country=2&Age%5B%5D=50",
         "https://www.thivien.net/search-author.php?Country=2&Age%5B%5D=52",
@@ -270,48 +270,44 @@ class ThivienAuthorListSpider(scrapy.Spider):
     ]
 
     custom_settings = {
-        'USER_AGENT': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        'ROBOTSTXT_OBEY': True,
         'DOWNLOAD_DELAY': 5,
     }
     count = 0
 
     def parse(self, response):
-        # Lặp qua từng khối item chứa thông tin tác giả
-        # Class "list-item" bao bọc toàn bộ thông tin của 1 dòng
+        
         for item in response.css('.list-item'):
             
-            # Tìm thẻ <a> bên trong thẻ <h4 class="list-item-header">
+            
             author_link = item.css('.list-item-header a')
             
             name = author_link.css('::text').get()
             href = author_link.css('::attr(href)').get()
 
-            # Chỉ lấy dữ liệu nếu tìm thấy cả tên và link
+
             if name and href:
                 print(f"TAC GIA: {name} - Link: {href}")
                 self.count += 1
                 yield {
                     'tác giả': name.strip(),
-                    'url': response.urljoin(href) # Chuyển link tương đối thành tuyệt đối
+                    'url': response.urljoin(href)
                 }
                 if self.count % 100 == 0:
                     print(f"Đã thu thập được {self.count} tác giả.")
                     import time
-                    time.sleep(300)  # Tạm dừng 2 giây sau mỗi 50 tác giả thu thập được
+                    time.sleep(300)  
 
-# --- Cấu hình chạy trực tiếp ---
+
 if __name__ == "__main__":
     process = CrawlerProcess(settings={
         'FEEDS': {
-            'authors_list.json': { # Tên file output
+            'authors_list.json': { 
                 'format': 'json',
                 'encoding': 'utf8',
                 'indent': 4,
                 'overwrite': True,
             }
         },
-        'LOG_LEVEL': 'INFO'
     })
 
     process.crawl(ThivienAuthorListSpider)
