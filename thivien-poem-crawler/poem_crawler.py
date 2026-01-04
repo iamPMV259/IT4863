@@ -20,7 +20,7 @@ class PoemCrawler(scrapy.Spider):
 
 
     custom_settings = {
-        'DOWNLOAD_DELAY': 5,
+        'DOWNLOAD_DELAY': 10,
     }
 
     def parse(self, response):
@@ -28,7 +28,6 @@ class PoemCrawler(scrapy.Spider):
 
         items = response.xpath('//url')
 
-        print(f"Found {len(items)} items in sitemap: {response.url}")
         
         count = 0
         for item in items:
