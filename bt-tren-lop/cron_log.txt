@@ -7845,3 +7845,99 @@
  'scheduler/enqueued/memory': 713,
  'start_time': datetime.datetime(2026, 1, 4, 11, 0, 1, 757483, tzinfo=datetime.timezone.utc)}
 2026-01-04 18:31:38 [scrapy.core.engine] INFO: Spider closed (finished)
+2026-01-05 00:00:01 [scrapy.utils.log] INFO: Scrapy 2.13.4 started (bot: scrapybot)
+2026-01-05 00:00:01 [scrapy.utils.log] INFO: Versions:
+{'lxml': '6.0.2',
+ 'libxml2': '2.14.6',
+ 'cssselect': '1.3.0',
+ 'parsel': '1.10.0',
+ 'w3lib': '2.3.1',
+ 'Twisted': '25.5.0',
+ 'Python': '3.10.19 (main, Oct 28 2025, 12:10:48) [Clang 20.1.4 ]',
+ 'pyOpenSSL': '25.3.0 (OpenSSL 3.5.4 30 Sep 2025)',
+ 'cryptography': '46.0.3',
+ 'Platform': 'Linux-6.14.0-37-generic-x86_64-with-glibc2.39'}
+2026-01-05 00:00:01 [scrapy.addons] INFO: Enabled addons:
+[]
+2026-01-05 00:00:01 [asyncio] DEBUG: Using selector: EpollSelector
+2026-01-05 00:00:01 [scrapy.utils.log] DEBUG: Using reactor: twisted.internet.asyncioreactor.AsyncioSelectorReactor
+2026-01-05 00:00:01 [scrapy.utils.log] DEBUG: Using asyncio event loop: asyncio.unix_events._UnixSelectorEventLoop
+2026-01-05 00:00:01 [scrapy.extensions.telnet] INFO: Telnet Password: 0dfd1636c93e999b
+2026-01-05 00:00:01 [scrapy.middleware] INFO: Enabled extensions:
+['scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.memusage.MemoryUsage',
+ 'scrapy.extensions.logstats.LogStats']
+2026-01-05 00:00:01 [scrapy.crawler] INFO: Overridden settings:
+{}
+2026-01-05 00:00:01 [scrapy.middleware] INFO: Enabled downloader middlewares:
+['scrapy.downloadermiddlewares.offsite.OffsiteMiddleware',
+ 'scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware',
+ 'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware',
+ 'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware',
+ 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware',
+ 'scrapy.downloadermiddlewares.retry.RetryMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware',
+ 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware',
+ 'scrapy.downloadermiddlewares.cookies.CookiesMiddleware',
+ 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware',
+ 'scrapy.downloadermiddlewares.stats.DownloaderStats']
+2026-01-05 00:00:01 [scrapy.middleware] INFO: Enabled spider middlewares:
+['scrapy.spidermiddlewares.start.StartSpiderMiddleware',
+ 'scrapy.spidermiddlewares.httperror.HttpErrorMiddleware',
+ 'scrapy.spidermiddlewares.referer.RefererMiddleware',
+ 'scrapy.spidermiddlewares.urllength.UrlLengthMiddleware',
+ 'scrapy.spidermiddlewares.depth.DepthMiddleware']
+2026-01-05 00:00:01 [scrapy.middleware] INFO: Enabled item pipelines:
+[]
+2026-01-05 00:00:01 [scrapy.core.engine] INFO: Spider opened
+2026-01-05 00:00:01 [scrapy.extensions.logstats] INFO: Crawled 0 pages (at 0 pages/min), scraped 0 items (at 0 items/min)
+2026-01-05 00:00:01 [scrapy.extensions.telnet] INFO: Telnet console listening on 127.0.0.1:6023
+2026-01-05 00:00:01 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://hust.edu.vn/vi/news/rss/cong-tac-dang-va-doan-the/> (referer: None)
+2026-01-05 00:00:01 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://hust.edu.vn/vi/news/rss/khoa-hoc-cong-nghe-dmst/> (referer: None)
+2026-01-05 00:00:02 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://hust.edu.vn/vi/news/rss/bach-khoa-tren-bao-chi/> (referer: None)
+2026-01-05 00:00:02 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://hust.edu.vn/vi/news/rss/tin-tuc-su-kien/> (referer: None)
+2026-01-05 00:00:12 [scrapy.dupefilters] DEBUG: Filtered duplicate request: <GET https://hust.edu.vn/vi/news/tin-tuc-su-kien/dau-an-dai-hoc-bach-khoa-ha-noi-nam-2025-655750.html> - no more duplicates will be shown (see DUPEFILTER_DEBUG to show all duplicates)
+2026-01-05 00:00:12 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://hust.edu.vn/vi/news/rss/> (referer: None)
+2026-01-05 00:00:12 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://hust.edu.vn/vi/news/rss/hop-tac-doi-ngoai-truyen-thong/> (referer: None)
+2026-01-05 00:00:12 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://hust.edu.vn/vi/news/rss/tro-giup-can-bo/> (referer: None)
+2026-01-05 00:00:12 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://hust.edu.vn/vi/news/rss/tro-giup-sinh-vien/> (referer: None)
+2026-01-05 00:00:22 [scrapy.downloadermiddlewares.retry] DEBUG: Retrying <GET https://hust.edu.vn/vi/news/rss/to-chuc-nhan-su-tuyen-dung/> (failed 1 times): [<twisted.python.failure.Failure twisted.internet.error.ConnectionLost: Connection to the other side was lost in a non-clean fashion: Connection lost.>]
+2026-01-05 00:00:22 [scrapy.downloadermiddlewares.retry] DEBUG: Retrying <GET https://hust.edu.vn/vi/news/rss/hoat-dong-chung/> (failed 1 times): [<twisted.python.failure.Failure twisted.internet.error.ConnectionLost: Connection to the other side was lost in a non-clean fashion: Connection lost.>]
+2026-01-05 00:00:22 [scrapy.downloadermiddlewares.retry] DEBUG: Retrying <GET https://hust.edu.vn/vi/news/rss/tuyen-sinh-dao-tao-cong-tac-sinh-vien/> (failed 1 times): [<twisted.python.failure.Failure twisted.internet.error.ConnectionLost: Connection to the other side was lost in a non-clean fashion: Connection lost.>]
+2026-01-05 00:00:22 [scrapy.downloadermiddlewares.retry] DEBUG: Retrying <GET https://hust.edu.vn/vi/news/rss/kiem-dinh-xep-hang/> (failed 1 times): [<twisted.python.failure.Failure twisted.internet.error.ConnectionLost: Connection to the other side was lost in a non-clean fashion: Connection lost.>]
+2026-01-05 00:01:07 [scrapy.extensions.logstats] INFO: Crawled 8 pages (at 8 pages/min), scraped 0 items (at 0 items/min)
+2026-01-05 00:01:22 [scrapy.downloadermiddlewares.retry] DEBUG: Retrying <GET https://hust.edu.vn/vi/news/hoat-dong-chung/thu-chuc-mung-nam-moi-2026-cua-giam-doc-dai-hoc-bach-khoa-ha-noi-655754.html> (failed 1 times): [<twisted.python.failure.Failure twisted.internet.error.ConnectionLost: Connection to the other side was lost in a non-clean fashion: Connection lost.>]
+2026-01-05 00:01:22 [scrapy.downloadermiddlewares.retry] DEBUG: Retrying <GET https://hust.edu.vn/vi/news/tin-tuc-su-kien/dau-an-dai-hoc-bach-khoa-ha-noi-nam-2025-655750.html> (failed 1 times): [<twisted.python.failure.Failure twisted.internet.error.ConnectionLost: Connection to the other side was lost in a non-clean fashion: Connection lost.>]
+2026-01-05 00:01:22 [scrapy.downloadermiddlewares.retry] DEBUG: Retrying <GET https://hust.edu.vn/vi/news/rss/cong-tac-sinh-vien/> (failed 1 times): [<twisted.python.failure.Failure twisted.internet.error.ConnectionLost: Connection to the other side was lost in a non-clean fashion: Connection lost.>]
+2026-01-05 00:01:22 [scrapy.downloadermiddlewares.retry] DEBUG: Retrying <GET https://hust.edu.vn/vi/news/rss/su-kien-sap-dien-ra/> (failed 1 times): [<twisted.python.failure.Failure twisted.internet.error.ConnectionLost: Connection to the other side was lost in a non-clean fashion: Connection lost.>]
+2026-01-05 00:01:42 [scrapy.downloadermiddlewares.retry] DEBUG: Retrying <GET https://hust.edu.vn/vi/news/khoa-hoc-cong-nghe-dmst/con-so-va-su-kien-khoa-hoc-cong-nghe-doi-moi-sang-tao-dai-hoc-bach-khoa-ha-noi-nam-2025-655752.html> (failed 1 times): [<twisted.python.failure.Failure twisted.internet.error.ConnectionLost: Connection to the other side was lost in a non-clean fashion: Connection lost.>]
+2026-01-05 00:01:42 [scrapy.downloadermiddlewares.retry] DEBUG: Retrying <GET https://hust.edu.vn/vi/news/rss/thong-bao-chung/> (failed 1 times): [<twisted.python.failure.Failure twisted.internet.error.ConnectionLost: Connection to the other side was lost in a non-clean fashion: Connection lost.>]
+2026-01-05 00:02:12 [scrapy.extensions.logstats] INFO: Crawled 8 pages (at 0 pages/min), scraped 0 items (at 0 items/min)
+2026-01-05 00:02:37 [scrapy.downloadermiddlewares.retry] DEBUG: Retrying <GET https://hust.edu.vn/vi/news/rss/hoat-dong-chung/> (failed 2 times): [<twisted.python.failure.Failure twisted.internet.error.ConnectionLost: Connection to the other side was lost in a non-clean fashion: Connection lost.>]
+2026-01-05 00:03:12 [scrapy.downloadermiddlewares.retry] DEBUG: Retrying <GET https://hust.edu.vn/vi/news/tin-tuc-su-kien/hoi-dong-dai-hoc-hop-ky-thu-5-trong-boi-canh-thay-doi-mo-hinh-quan-tri-giao-duc-dai-hoc-655745.html> (failed 1 times): [<twisted.python.failure.Failure twisted.internet.error.ConnectionLost: Connection to the other side was lost in a non-clean fashion: Connection lost.>]
+2026-01-05 00:03:12 [scrapy.downloadermiddlewares.retry] DEBUG: Retrying <GET https://hust.edu.vn/vi/news/rss/tuyen-sinh-dao-tao-cong-tac-sinh-vien/> (failed 2 times): [<twisted.python.failure.Failure twisted.internet.error.ConnectionLost: Connection to the other side was lost in a non-clean fashion: Connection lost.>]
+2026-01-05 00:03:12 [scrapy.downloadermiddlewares.retry] DEBUG: Retrying <GET https://hust.edu.vn/vi/news/rss/to-chuc-nhan-su-tuyen-dung/> (failed 2 times): [<twisted.python.failure.Failure twisted.internet.error.ConnectionLost: Connection to the other side was lost in a non-clean fashion: Connection lost.>]
+2026-01-05 00:03:12 [scrapy.downloadermiddlewares.retry] DEBUG: Retrying <GET https://hust.edu.vn/vi/news/rss/kiem-dinh-xep-hang/> (failed 2 times): [<twisted.python.failure.Failure twisted.internet.error.ConnectionLost: Connection to the other side was lost in a non-clean fashion: Connection lost.>]
+2026-01-05 00:03:12 [scrapy.downloadermiddlewares.retry] DEBUG: Retrying <GET https://hust.edu.vn/vi/news/hoat-dong-chung/cuoi-nam-2025-khat-vong-vuon-len-duoc-noi-dai-boi-nhung-nguoi-bach-khoa-xuat-sac-655747.html> (failed 1 times): [<twisted.python.failure.Failure twisted.internet.error.ConnectionLost: Connection to the other side was lost in a non-clean fashion: Connection lost.>]
+2026-01-05 00:03:32 [scrapy.extensions.logstats] INFO: Crawled 8 pages (at 0 pages/min), scraped 0 items (at 0 items/min)
+2026-01-05 00:03:42 [scrapy.downloadermiddlewares.retry] DEBUG: Retrying <GET https://hust.edu.vn/vi/news/rss/lich-cong-tac/> (failed 1 times): User timeout caused connection failure: Getting https://hust.edu.vn/vi/news/rss/lich-cong-tac/ took longer than 180.0 seconds..
+2026-01-05 00:04:02 [scrapy.downloadermiddlewares.retry] DEBUG: Retrying <GET https://hust.edu.vn/vi/news/khoa-hoc-cong-nghe-dmst/5-nu-sinh-vat-ly-bach-khoa-am-tron-hoc-bong-jined-lan-thu-7-655751.html> (failed 1 times): User timeout caused connection failure: Getting https://hust.edu.vn/vi/news/khoa-hoc-cong-nghe-dmst/5-nu-sinh-vat-ly-bach-khoa-am-tron-hoc-bong-jined-lan-thu-7-655751.html took longer than 180.0 seconds..
+2026-01-05 00:04:22 [scrapy.downloadermiddlewares.retry] DEBUG: Retrying <GET https://hust.edu.vn/vi/news/hoat-dong-chung/nhung-dau-an-va-con-nguoi-bach-khoa-gan-bo-cung-quan-doi-nhan-dan-655740.html> (failed 1 times): [<twisted.python.failure.Failure twisted.internet.error.ConnectionLost: Connection to the other side was lost in a non-clean fashion: Connection lost.>]
+2026-01-05 00:04:32 [scrapy.extensions.logstats] INFO: Crawled 8 pages (at 0 pages/min), scraped 0 items (at 0 items/min)
+2026-01-05 00:04:48 [scrapy.crawler] INFO: Received SIGTERM, shutting down gracefully. Send again to force 
+2026-01-05 00:04:57 [scrapy.downloadermiddlewares.retry] DEBUG: Retrying <HEAD https://hust.edu.vn/vi/news/khoa-hoc-cong-nghe-dmst/dai-hoc-bach-khoa-ha-noi-dong-hanh-cung-hanh-trinh-doi-moi-sang-tao-thu-do-655744.html> (failed 1 times): [<twisted.python.failure.Failure twisted.internet.error.ConnectionLost: Connection to the other side was lost in a non-clean fashion: Connection lost.>]
+2026-01-05 00:04:57 [scrapy.downloadermiddlewares.retry] DEBUG: Retrying <HEAD https://hust.edu.vn/vi/news/khoa-hoc-cong-nghe-dmst/hon-300-nha-khoa-hoc-tham-gia-kien-tao-he-sinh-thai-so-655739.html> (failed 1 times): [<twisted.python.failure.Failure twisted.internet.error.ConnectionLost: Connection to the other side was lost in a non-clean fashion: Connection lost.>]
+2026-01-05 00:04:57 [scrapy.downloadermiddlewares.retry] DEBUG: Retrying <GET https://hust.edu.vn/vi/news/hoat-dong-chung/thu-chuc-mung-sinh-vien-hoc-vien-nuoc-cong-hoa-dan-chu-nhan-dan-lao-655704.html> (failed 1 times): [<twisted.python.failure.Failure twisted.internet.error.ConnectionLost: Connection to the other side was lost in a non-clean fashion: Connection lost.>]
+2026-01-05 00:04:57 [scrapy.downloadermiddlewares.retry] DEBUG: Retrying <GET https://hust.edu.vn/vi/news/hoat-dong-chung/hon-1-ty-dong-hoc-bong-duoc-trao-cho-sinh-vien-bach-khoa-ha-noi-chi-trong-2-ngay-655452.html> (failed 1 times): No route to host: 101: Network is unreachable.
+2026-01-05 00:05:32 [scrapy.core.engine] INFO: Closing spider (shutdown)
+2026-01-05 00:05:32 [scrapy.downloadermiddlewares.retry] DEBUG: Retrying <GET https://hust.edu.vn/vi/news/tin-tuc-su-kien/huong-dan-truy-xuat-website-loi-xac-thuc-ssl-secure-sockets-layer-303358.html> (failed 1 times): No route to host: 101: Network is unreachable.
+2026-01-05 00:05:32 [scrapy.downloadermiddlewares.retry] DEBUG: Retrying <GET https://hust.edu.vn/vi/news/hoat-dong-chung/hoc-vien-ai-cho-viet-nam-chinh-thuc-khoi-dong-nham-phat-trien-nhan-luc-cong-nghe-cao-655753.html> (failed 1 times): No route to host: 101: Network is unreachable.
+2026-01-05 00:05:32 [scrapy.downloadermiddlewares.retry] DEBUG: Retrying <HEAD https://hust.edu.vn/vi/news/khoa-hoc-cong-nghe-dmst/dai-hoc-bach-khoa-ha-noi-va-tap-doan-astrazeneca-thanh-lap-trung-tam-doi-moi-sang-tao-y-te-az-hust-655724.html> (failed 1 times): No route to host: 101: Network is unreachable.
+2026-01-05 00:05:32 [scrapy.downloadermiddlewares.retry] DEBUG: Retrying <GET https://hust.edu.vn/vi/news/tin-tuc-su-kien/khat-vong-phat-trien-theo-tinh-than-nghi-quyet-so-71-nq-tw-cua-bo-chinh-tri-655677.html> (failed 1 times): No route to host: 101: Network is unreachable.
+2026-01-05 00:05:32 [scrapy.extensions.logstats] INFO: Crawled 8 pages (at 0 pages/min), scraped 0 items (at 0 items/min)
+2026-01-05 00:06:07 [scrapy.downloadermiddlewares.retry] DEBUG: Retrying <GET https://hust.edu.vn/vi/news/hoat-dong-chung/nhung-con-so-an-tuong-tai-hoi-nghi-sinh-vien-nghien-cuu-khoa-hoc-2025-655453.html> (failed 1 times): No route to host: 101: Network is unreachable.
+2026-01-05 00:06:07 [scrapy.downloadermiddlewares.retry] DEBUG: Retrying <GET https://hust.edu.vn/vi/news/tin-tuc-su-kien/tin-hot-thang-4-30-ngay-dung-thu-csdl-access-engineering-va-access-science-655050.html> (failed 1 times): No route to host: 101: Network is unreachable.
+2026-01-05 00:06:07 [scrapy.downloadermiddlewares.retry] DEBUG: Retrying <GET https://hust.edu.vn/vi/news/hoat-dong-chung/20-sinh-vien-bach-khoa-nhan-hoc-bong-tu-tap-doan-cong-nghiep-dien-sumitomo-654970.html> (failed 1 times): No route to host: 101: Network is unreachable.
+2026-01-05 00:06:07 [scrapy.downloadermiddlewares.retry] DEBUG: Retrying <GET https://hust.edu.vn/vi/news/hoat-dong-chung/nhung-bong-hong-tham-lang-thu-vien-ta-quang-buu-654694.html> (failed 1 times): No route to host: 101: Network is unreachable.

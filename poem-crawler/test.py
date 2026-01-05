@@ -36,6 +36,10 @@ def load_data():
 
 
     print(f"Final full data count: {len(full_data)}")
+
+    full_data = [dict(t) for t in {tuple(d.items()) for d in full_data}]
+    print(f"Full data count after deduplication: {len(full_data)}")
+
     json.dump(full_data, open("full_data.json", "w", encoding="utf-8"), ensure_ascii=False, indent=2)
 
 
