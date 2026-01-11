@@ -1,4 +1,5 @@
 import json
+import os
 import re
 import time
 
@@ -9,9 +10,11 @@ from w3lib.html import remove_tags
 
 class PoemCrawler(scrapy.Spider):
     name = 'poem_crawler'
+
+    sitemap_file = os.path.join(os.path.dirname(__file__), '_sitemap1.xml')
     
     start_urls = [
-        'file:///home/pmv259/Documents/big-exercise/IT4863/vietnamese-poems-search-system/_sitemap1.xml'
+        f'file://{sitemap_file}'
     ]
 
 
