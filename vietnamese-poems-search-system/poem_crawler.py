@@ -11,7 +11,7 @@ class PoemCrawler(scrapy.Spider):
     name = 'poem_crawler'
     
     start_urls = [
-        'file:///home/pmv259/Downloads/_sitemap1.xml'
+        'file:///home/pmv259/Documents/big-exercise/IT4863/vietnamese-poems-search-system/_sitemap1.xml'
     ]
 
 
