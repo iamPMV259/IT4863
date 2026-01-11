@@ -28,22 +28,7 @@ def remove_accent(text: str) -> str:
 def render_poem(text: str) -> str:
     return html.escape(text)
 
-def is_author_query(q: str) -> bool:
-    return len(q.split()) <= 3 and q[0].isupper()
 
-def build_author_query(query_text, page):
-    return {
-        "from": (page - 1) * PAGE_SIZE,
-        "size": PAGE_SIZE,
-        "query": {
-            "match": {
-                "tac_gia": {
-                    "query": query_text,
-                    "operator": "and"
-                }
-            }
-        }
-    }
 
 
 
@@ -123,10 +108,7 @@ with st.sidebar:
     )
 
 if query:
-    if is_author_query(query):
-        body = build_author_query(query, page)
-    else:
-        body = build_query(query, page, alpha, beta)
+    body = build_query(query, page, alpha, beta)
 
     res = es.search(index=INDEX_NAME, body=body)
 
