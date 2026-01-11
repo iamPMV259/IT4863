@@ -28,6 +28,24 @@ def remove_accent(text: str) -> str:
 def render_poem(text: str) -> str:
     return html.escape(text)
 
+def is_author_query(q: str) -> bool:
+    return len(q.split()) <= 3 and q[0].isupper()
+
+def build_author_query(query_text, page):
+    return {
+        "from": (page - 1) * PAGE_SIZE,
+        "size": PAGE_SIZE,
+        "query": {
+            "match": {
+                "tac_gia": {
+                    "query": query_text,
+                    "operator": "and"
+                }
+            }
+        }
+    }
+
+
 
 def build_query(query_text, page, alpha, beta):
 
@@ -52,7 +70,7 @@ def build_query(query_text, page, alpha, beta):
                                     "fields": [
                                         "ten_bai^3",
                                         "noi_dung_tho^2",
-                                        "tac_gia"
+                                        "tac_gia^10"
                                     ]
                                 }
                             },
@@ -105,7 +123,11 @@ with st.sidebar:
     )
 
 if query:
-    body = build_query(query, page, alpha, beta)
+    if is_author_query(query):
+        body = build_author_query(query, page)
+    else:
+        body = build_query(query, page, alpha, beta)
+
     res = es.search(index=INDEX_NAME, body=body)
 
     hits = res["hits"]["hits"]
