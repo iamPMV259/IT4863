@@ -3,45 +3,36 @@ import os
 
 
 def load_data():
+    poem_metadata = json.load(open("poem_metadata.json", "r", encoding="utf-8"))
 
-    full_data = json.load(open("full_data.json", "r", encoding="utf-8"))
-    print(f"Initial full data count: {len(full_data)}")
+    print(f"Loaded {len(poem_metadata)} poems' metadata.")
+
+
+    crawled_poems = json.load(open("poem_full_data_1.json", "r", encoding="utf-8"))
     
-    for i in range(19):
-        name_file = f"{i}"
-        if not os.path.exists(f"poem_full_data_{name_file}.json"):
-            print(f"File poem_full_data_{name_file}.json does not exist. Skipping.")
+    print(f"Loaded {len(crawled_poems)} crawled poems' full data.")
+
+    poem_urls = json.load(open("poem_urls_part_1.json", "r", encoding="utf-8"))
+    poem_urls_dict = {item['url']: item for item in poem_urls}
+
+    print(f"Loaded {len(poem_urls)} poem URLs.")
+
+    for item in crawled_poems:
+        if item['url'].find("robot-check.php") != -1:
             continue
-        poems_data = json.load(open(f"poem_full_data_{name_file}.json", "r", encoding="utf-8"))
+        poem_urls_dict.pop(item['url'], None)
+        if not item.get('ten_bai'):
+            continue
+        poem_metadata.append(item)
 
-        print(f"Loading data from poem_full_data_{name_file}.json with {len(poems_data)} poems.")
+    print(f"After merging, we have {len(poem_metadata)} poems' metadata.")
 
-        full_data.extend(poems_data)
-        print(f"Updated full data count: {len(full_data)} after loading part {name_file}.")
+    poem_urls_remaining = list(poem_urls_dict.values())
+    print(f"Remaining {len(poem_urls_remaining)} poem URLs to crawl.")
 
-
-        poems_urls = json.load(open(f"poem_urls_part_{name_file}.json", "r", encoding="utf-8"))
-
-        print(f"Loading URLs from poem_urls_part_{name_file}.json with {len(poems_urls)} URLs.")
-
-        poem_urls_dict = {item["url"]: item for item in poems_urls}
-
-        for poem in poems_data:
-            url = poem["url"]
-            if url in poem_urls_dict:
-                poem_urls_dict.pop(url)
-
-        print(f"Remaining poem URLs count: {len(poem_urls_dict)} after removing crawled poems from part {name_file}.")
-        json.dump(list(poem_urls_dict.values()), open(f"poem_urls_part_{name_file}.json", "w", encoding="utf-8"), ensure_ascii=False, indent=2)
-
-
-    print(f"Final full data count: {len(full_data)}")
-
-    full_data = [dict(t) for t in {tuple(d.items()) for d in full_data}]
-    print(f"Full data count after deduplication: {len(full_data)}")
-
-    json.dump(full_data, open("full_data.json", "w", encoding="utf-8"), ensure_ascii=False, indent=2)
-
+    json.dump(poem_metadata, open("poem_metadata.json", "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+    json.dump(poem_urls_remaining, open("poem_urls_part_1.json", "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+            
 
 
 if __name__ == "__main__":

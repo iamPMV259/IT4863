@@ -39,6 +39,8 @@ class PoemCrawler(scrapy.Spider):
         if quoc_gia != "Việt Nam":
             return
 
+        ten_bai = response.css('.page-header h1::text').get()
+
         thoi_ky = response.css('.page-header .breadcrum a:nth-of-type(3) b::text').get()
         
         tac_gia = response.css('.page-header .breadcrum a:nth-of-type(4) b::text').get()
@@ -108,6 +110,7 @@ class PoemCrawler(scrapy.Spider):
 
         yield {
             'url': response.url,
+            'ten_bai': ten_bai.strip() if ten_bai else '',
             'quoc_gia': quoc_gia.strip() if quoc_gia else '',
             'tac_gia': tac_gia.strip() if tac_gia else '',
             'tap_tho': tap_tho.strip() if tap_tho else '',

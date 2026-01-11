@@ -59,6 +59,8 @@ class PoemCrawler(scrapy.Spider):
 
 
     def parse_detail(self, response):
+
+        ten_bai = response.css('.page-header h1::text').get()
         
         quoc_gia = response.css('.page-header .breadcrum a:nth-of-type(2) b::text').get()
 
@@ -94,6 +96,7 @@ class PoemCrawler(scrapy.Spider):
 
         yield {
             'url': response.url,
+            'ten_bai': ten_bai.strip() if ten_bai else '',
             'quoc_gia': quoc_gia.strip() if quoc_gia else '',
             'tac_gia': tac_gia.strip() if tac_gia else '',
             'tap_tho': tap_tho.strip() if tap_tho else '',
@@ -109,7 +112,7 @@ class PoemCrawler(scrapy.Spider):
 if __name__ == "__main__":
     process = CrawlerProcess(settings={
         'FEEDS': {
-            'poem_full_data.json': {
+            'poem_full_data_test.json': {
                 'format': 'json',
                 'encoding': 'utf8',
                 'indent': 4,
