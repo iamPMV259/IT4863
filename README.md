@@ -1,2 +1,2 @@
-# IT4863
-Poem Retrieval
+# Vietnamese Poem Retrieval
+Using Scrapy, Elastic Search
